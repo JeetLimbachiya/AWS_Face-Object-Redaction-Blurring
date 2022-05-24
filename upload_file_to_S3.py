@@ -1,19 +1,44 @@
-        
+from datetime import datetime        
+
 import boto3
+
 s3 = boto3.client('s3')
+
+Now = datetime.now()
+
 with open("Students_1.mp4","rb") as f:
-    s3.upload_fileobj(f, "faceredactionbucket","Students_1.mp4")
+
+    s3.upload_fileobj(f, "faceredactionbucket",f"{'Students_1 - '}{Now}.mp4",ExtraArgs={'ContentType': 'video/mp4'})
+
+    
+
+
+
+
+
 
 
 from boto3 import client
+
 from botocore.client import Config
 
+
+
 s3 = client('s3', region_name="us-east-2", config=Config(signature_version='s3v4'))
+
 url = s3.generate_presigned_url(
+
     ClientMethod='get_object',
-        Params={'Bucket': 'faceredactionbucket', 'Key': 'Students_1.mp4'},
-        ExpiresIn=3600,
+
+        Params={'Bucket': 'faceredactionbucket', 'Key': f"{'Students_1 - '}{Now}.mp4"},
+
+
+
+        ExpiresIn=360,
+
     )
+
+
 
 print(url)
 
