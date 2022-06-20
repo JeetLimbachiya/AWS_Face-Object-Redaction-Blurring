@@ -23,6 +23,11 @@ url = s3.generate_presigned_url(
 print(url)
 
 
+#sns = boto3.client('sns',region_name="us-east-2")
+#msg = "Hi, How are you? This is a mail for your latest pushed s3 object. Consider this url as #presigned URL \
+#NOTE: This S3 object link will expire after 5 mins. You will need to contact our team incase you #want the recording."\ 
+#response = sns.publish(TopicArn='arn:aws:sns:us-east-2:673304395320:SES_EC2',Message= msg + url)
+#print(response)
 
 
 
