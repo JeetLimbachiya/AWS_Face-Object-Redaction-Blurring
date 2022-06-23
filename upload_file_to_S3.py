@@ -29,42 +29,68 @@ print(url)
 #response = sns.publish(TopicArn='arn:aws:sns:us-east-2:673304395320:SES_EC2',Message= msg + url)
 #print(response)
 
+#======================================
+
+ses = boto3.client('ses',region_name="us-east-2")#,config=Config(X-Amz-Algorithm==AWS4-HMAC-SHA256,X-AMZ-Expires==300))
+response = ses.send_email(
+    Source='jlimbachiya@safetyvision.com',
+    Destination={
+        'ToAddresses': ['jeet.limbachiya@relayhumancloud.com','jeet@svcloud.live','afulzele@safetyvision.com']
+    },
+    Message={
+        'Subject': {
+            'Charset': 'UTF-8',
+            'Data': 'Sending a URL of S3  ',# +  f'URL: {url}'),
+            'Charset': 'UTF-8'
+        },
+        'Body': {
+            'Text': {
+                'Charset': 'UTF-8',
+                'Data': 'Below is a URL of S3  'f'URL: {url}',
+            'Charset': 'UTF-8'
+          }
+        }
+})
+
+print(response)
 
 
-import smtplib, ssl
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-sender_email = "sv2022relayhumancloud@gmail.com"
-receiver_email = "jeet.limbachiya@relayhumancloud.com"
-password = input("Type your password and press enter:")
-
-message = MIMEMultipart("alternative")
-message["Subject"] = "S3 object URL testing"
-message["From"] = sender_email
-message["To"] = receiver_email
 
 
-# Create the plain-text and HTML version of your message
-text = "\
-Hi ,\
-How are you?\
-This is a mail for your latest pushed s3 object. \
-NOTE: This S3 object link will expire after 5 mins. You will need to contact our team incase you want the recording. "
-html = url
-# Turn these into plain/html MIMEText objects
-part1 = MIMEText(text, "plain")
-part2 = MIMEText(html, "html")
+# import smtplib, ssl
+# from email.mime.text import MIMEText
+# from email.mime.multipart import MIMEMultipart
 
-# Add HTML/plain-text parts to MIMEMultipart message
-# The email client will try to render the last part first
-message.attach(part1)
-message.attach(part2)
+# sender_email = "sv2022relayhumancloud@gmail.com"
+# receiver_email = "jeet.limbachiya@relayhumancloud.com"
+# password = input("Type your password and press enter:")
 
-# Create secure connection with server and send email
-context = ssl.create_default_context()
-with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-    server.login(sender_email, password)
-    server.sendmail(
-        sender_email, receiver_email,message.as_string()
-    )
+# message = MIMEMultipart("alternative")
+# message["Subject"] = "S3 object URL testing"
+# message["From"] = sender_email
+# message["To"] = receiver_email
+
+
+# # Create the plain-text and HTML version of your message
+# text = "\
+# Hi ,\
+# How are you?\
+# This is a mail for your latest pushed s3 object. \
+# NOTE: This S3 object link will expire after 5 mins. You will need to contact our team incase you want the recording. "
+# html = url
+# # Turn these into plain/html MIMEText objects
+# part1 = MIMEText(text, "plain")
+# part2 = MIMEText(html, "html")
+
+# # Add HTML/plain-text parts to MIMEMultipart message
+# # The email client will try to render the last part first
+# message.attach(part1)
+# message.attach(part2)
+
+# # Create secure connection with server and send email
+# context = ssl.create_default_context()
+# with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+#     server.login(sender_email, password)
+#     server.sendmail(
+#         sender_email, receiver_email,message.as_string()
+#     )
